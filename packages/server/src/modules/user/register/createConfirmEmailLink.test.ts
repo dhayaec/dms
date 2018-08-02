@@ -5,7 +5,7 @@ import * as faker from "faker";
 
 import { createConfirmEmailLink } from "./createConfirmEmailLink";
 import { User } from "../../../entity/User";
-import { createTestConn } from "../../../testUtils/createTestConn";
+import { connectDbTest } from "../../../testUtils/connectDbTest";
 
 let userId = "";
 const redis = new Redis();
@@ -14,7 +14,7 @@ faker.seed(Date.now() + 4);
 let conn: Connection;
 
 beforeAll(async () => {
-  conn = await createTestConn();
+  conn = await connectDbTest();
   const user = await User.create({
     email: faker.internet.email(),
     password: faker.internet.password()

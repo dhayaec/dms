@@ -1,14 +1,17 @@
-import * as yup from "yup";
-import * as bcrypt from "bcryptjs";
+import * as yup from 'yup';
+import * as bcrypt from 'bcryptjs';
 
-import { ResolverMap } from "../../../types/graphql-utils";
-import { forgotPasswordLockAccount } from "../../../utils/forgotPasswordLockAccount";
-import { createForgotPasswordLink } from "../../../utils/createForgotPasswordLink";
-import { User } from "../../../entity/User";
-import { userNotFoundError, expiredKeyError } from "./errorMessages";
-import { forgotPasswordPrefix } from "../../../constants";
-import { registerPasswordValidation } from "../../../yupSchemas";
-import { formatYupError } from "../../../utils/formatYupError";
+import { ResolverMap } from '../../../types/graphql-utils';
+import {
+  forgotPasswordLockAccount,
+  createForgotPasswordLink
+} from '../../../utils/userUtils';
+
+import { User } from '../../../entity/User';
+import { userNotFoundError, expiredKeyError } from './errorMessages';
+import { forgotPasswordPrefix } from '../../../constants';
+import { registerPasswordValidation } from '../../../yupSchemas';
+import { formatYupError } from '../../../utils/utils';
 
 // 20 minutes
 // lock account
@@ -28,7 +31,7 @@ export const resolvers: ResolverMap = {
       if (!user) {
         return [
           {
-            path: "email",
+            path: 'email',
             message: userNotFoundError
           }
         ];
@@ -36,7 +39,7 @@ export const resolvers: ResolverMap = {
 
       await forgotPasswordLockAccount(user.id, redis);
       // @todo add frontend url
-      await createForgotPasswordLink("", user.id, redis);
+      await createForgotPasswordLink('', user.id, redis);
       // @todo send email with url
       return true;
     },
@@ -51,7 +54,7 @@ export const resolvers: ResolverMap = {
       if (!userId) {
         return [
           {
-            path: "key",
+            path: 'key',
             message: expiredKeyError
           }
         ];

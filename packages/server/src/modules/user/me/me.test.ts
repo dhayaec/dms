@@ -3,7 +3,7 @@ import * as faker from "faker";
 
 import { User } from "../../../entity/User";
 import { TestClient } from "../../../utils/TestClient";
-import { createTestConn } from "../../../testUtils/createTestConn";
+import { connectDbTest } from "../../../testUtils/connectDbTest";
 
 let userId: string;
 let conn: Connection;
@@ -12,7 +12,7 @@ const email = faker.internet.email();
 const password = faker.internet.password();
 
 beforeAll(async () => {
-  conn = await createTestConn();
+  conn = await connectDbTest();
   const user = await User.create({
     email,
     password,

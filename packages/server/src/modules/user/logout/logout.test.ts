@@ -3,7 +3,7 @@ import { Connection } from "typeorm";
 
 import { User } from "../../../entity/User";
 import { TestClient } from "../../../utils/TestClient";
-import { createTestConn } from "../../../testUtils/createTestConn";
+import { connectDbTest } from "../../../testUtils/connectDbTest";
 
 let conn: Connection;
 faker.seed(Date.now() + 2);
@@ -12,7 +12,7 @@ const password = faker.internet.password();
 
 let userId: string;
 beforeAll(async () => {
-  conn = await createTestConn();
+  conn = await connectDbTest();
   const user = await User.create({
     email,
     password,

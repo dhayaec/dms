@@ -4,7 +4,7 @@ import * as faker from "faker";
 import { invalidLogin, confirmEmailError } from "./errorMessages";
 import { User } from "../../../entity/User";
 import { TestClient } from "../../../utils/TestClient";
-import { createTestConn } from "../../../testUtils/createTestConn";
+import { connectDbTest } from "../../../testUtils/connectDbTest";
 
 faker.seed(Date.now() + 1);
 const email = faker.internet.email();
@@ -14,7 +14,7 @@ const client = new TestClient(process.env.TEST_HOST as string);
 
 let conn: Connection;
 beforeAll(async () => {
-  conn = await createTestConn();
+  conn = await connectDbTest();
 });
 afterAll(async () => {
   conn.close();
